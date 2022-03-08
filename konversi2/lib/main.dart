@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController etInput = TextEditingController();
   List<String> listSatuanSuhu = ['Kelvin', 'Reamur', 'Fahrenheit'];
   String selectedDropDown = 'Kelvin';
+  int hasilPerhitungan = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -60,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             TextField(
               controller: etInput,
-              decoration: InputDecoration(
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
                 labelText: 'Celcius',
                 hintText: 'Enter  the temperature in celcius',
               ),
@@ -85,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 20),
             ),
             Text(
-              '365',
+              '$hasilPerhitungan',
               style: TextStyle(fontSize: 32),
             ),
             SizedBox(height: 10),
@@ -93,7 +95,24 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        if (etInput.text.isNotEmpty) {
+                          hasilPerhitungan = int.parse(etInput.text) * 2;
+                          switch (selectedDropDown) {
+                            case 'Kelvin':
+                              hasilPerhitungan = int.parse(etInput.text) * 2;
+                              break;
+                            case 'Reamur':
+                              hasilPerhitungan = int.parse(etInput.text) * 4;
+                              break;
+                            case 'Fahrenheit':
+                              hasilPerhitungan = int.parse(etInput.text) * 9;
+                              break;
+                          }
+                        }
+                      });
+                    },
                     child: Text('Konversi Suhu'),
                   ),
                 ),

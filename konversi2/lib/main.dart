@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:konversi2/widgets/inputSuhu.dart';
+import 'package:konversi2/widgets/konversiSuhu.dart';
+import 'package:konversi2/widgets/perhitunganTerakhir.dart';
+import 'package:konversi2/widgets/riwayatPerhitungan.dart';
+import 'package:konversi2/widgets/targetPerhitungan.dart';
 
 void main() {
   runApp(const MyApp());
@@ -85,63 +90,29 @@ class _MyHomePageState extends State<MyHomePage> {
         margin: EdgeInsets.all(8),
         child: Column(
           children: [
-            TextField(
-              controller: etInput,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Celcius',
-                hintText: 'Enter  the temperature in celcius',
-              ),
-            ),
-            SizedBox(height: 8),
-            DropdownButton(
-              isExpanded: true,
-              value: selectedDropDown,
-              items: listSatuanSuhu.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
-                onDropDownChange(value);
-              },
+            inputSuhu(etInput: etInput),
+            const SizedBox(height: 8),
+            targetPerhitungan(
+              selectedDropDown: selectedDropDown,
+              listSatuanSuhu: listSatuanSuhu,
+              onDropDownChange: onDropDownChange,
             ),
             SizedBox(height: 10),
             Text(
               'hasil',
               style: TextStyle(fontSize: 20),
             ),
-            Text(
-              '$hasilPerhitungan',
-              style: TextStyle(fontSize: 32),
+            perhitunganTerakhir(hasilPerhitungan: hasilPerhitungan),
+            const SizedBox(height: 10),
+            KonversiSuhu(
+              onPressed: konversiSuhu,
             ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      konversiSuhu();
-                    },
-                    child: Text('Konversi Suhu'),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Riwayat Konversi',
               style: TextStyle(fontSize: 20),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: listHasil.length,
-                itemBuilder: (context, index) {
-                  return Text(listHasil[index]);
-                },
-              ),
-            ),
+            riwayatPerhitungan(listHasil: listHasil),
           ],
         ),
       ),

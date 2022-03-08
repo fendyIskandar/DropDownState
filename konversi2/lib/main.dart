@@ -34,6 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> listSatuanSuhu = ['Kelvin', 'Reamur', 'Fahrenheit'];
   String selectedDropDown = 'Kelvin';
   double hasilPerhitungan = 0.0;
+  List<String> listHasil = [];
 
   void _incrementCounter() {
     setState(() {
@@ -62,6 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
             hasilPerhitungan = (int.parse(etInput.text) * 9 / 5) + 32;
             break;
         }
+        listHasil.add("Konversi dari " +
+            etInput.text +
+            " Celcius ke " +
+            selectedDropDown +
+            " Dengan Hasil : " +
+            hasilPerhitungan.toString());
       }
     });
   }
@@ -126,6 +133,14 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'Riwayat Konversi',
               style: TextStyle(fontSize: 20),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: listHasil.length,
+                itemBuilder: (context, index) {
+                  return Text(listHasil[index]);
+                },
+              ),
             ),
           ],
         ),

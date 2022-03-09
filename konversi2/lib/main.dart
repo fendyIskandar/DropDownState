@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void onDropDownChange(Object? value) {
     return setState(() {
       selectedDropDown = value.toString();
+      konversiSuhu();
     });
   }
 
